@@ -10,8 +10,13 @@ import {
   Title,
   Tooltip,
   Legend,
+  CoreChartOptions,
+  DatasetChartOptions,
+  ElementChartOptions,
+  PluginChartOptions,
 } from "chart.js";
 import { Line } from "react-chartjs-2";
+import { _DeepPartialObject } from "chart.js/dist/types/utils";
 
 ChartJS.register(
   CategoryScale,
@@ -24,23 +29,40 @@ ChartJS.register(
 );
 
 const UsagePage = ({ data }) => {
-  let labels = [];
-  let usage = [];
-  let usageMale = [];
-  let usageFemale = [];
-  let usageRather = [];
-  let usageNone = [];
+  let labels: string[] = [];
+  let usage: number[] = [];
+  let usageMale: number[] = [];
+  let usageFemale: number[] = [];
+  let usageRather: number[] = [];
+  let usageNone: number[] = [];
 
-  data.allGenderCsv.edges.forEach((item) => {
-    usage.push(item.node.Count_sum);
-    usageMale.push(item.node.male_sum);
-    usageFemale.push(item.node.female_sum);
-    usageRather.push(item.node.none_sum);
-    usageNone.push(item.node.would_rather_not_say_sum);
-    labels.push(item.node.StartDate_first + " to " + item.node.EndDate_first);
-  });
+  data.allGenderCsv.edges.forEach(
+    (item: {
+      node: {
+        Count_sum: number;
+        male_sum: number;
+        female_sum: number;
+        none_sum: number;
+        would_rather_not_say_sum: number;
+        StartDate_first: string;
+        EndDate_first: string;
+      };
+    }) => {
+      usage.push(item.node.Count_sum);
+      usageMale.push(item.node.male_sum);
+      usageFemale.push(item.node.female_sum);
+      usageRather.push(item.node.none_sum);
+      usageNone.push(item.node.would_rather_not_say_sum);
+      labels.push(item.node.StartDate_first + " to " + item.node.EndDate_first);
+    }
+  );
 
-  const options = {
+  const options: _DeepPartialObject<
+    CoreChartOptions<"line"> &
+      ElementChartOptions<"line"> &
+      PluginChartOptions<"line"> &
+      DatasetChartOptions<"line">
+  > = {
     responsive: true,
     plugins: {
       legend: {

@@ -9,8 +9,16 @@ import {
   Title,
   Tooltip,
   Legend,
+  CoreChartOptions,
+  PluginChartOptions,
+  DatasetChartOptions,
+  ElementChartOptions,
+  plugins,
+  ScaleChartOptions,
 } from "chart.js";
 import { Line } from "react-chartjs-2";
+import { _DeepPartialObject } from "chart.js/dist/types/utils";
+import { text } from "stream/consumers";
 
 ChartJS.register(
   CategoryScale,
@@ -23,17 +31,31 @@ ChartJS.register(
 );
 
 const FirstsPage = ({ data }) => {
-  let labels = [];
-  let firsts = [];
-  let allUsers = [];
+  let labels: string[] = [];
+  let firsts: string[] = [];
+  let allUsers: string[] = [];
 
-  data.allFirstCsv.edges.forEach((item) => {
-    allUsers.push(item.node.all_users);
-    firsts.push(item.node.New_Users);
-    labels.push(item.node.Start_Date + " to " + item.node.End_Date);
-  });
+  data.allFirstCsv.edges.forEach(
+    (item: {
+      node: {
+        all_users: string;
+        New_Users: string;
+        Start_Date: string;
+        End_Date: string;
+      };
+    }) => {
+      allUsers.push(item.node.all_users);
+      firsts.push(item.node.New_Users);
+      labels.push(item.node.Start_Date + " to " + item.node.End_Date);
+    }
+  );
 
-  const options = {
+  const options: _DeepPartialObject<
+    CoreChartOptions<"line"> &
+      ElementChartOptions<"line"> &
+      PluginChartOptions<"line"> &
+      DatasetChartOptions<"line">
+  > = {
     responsive: true,
     plugins: {
       legend: {
