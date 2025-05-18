@@ -23,18 +23,14 @@ ChartJS.register(
   Legend
 );
 
-const UsagePage = ({ data }) => {
+const YearOnYearPage = ({ data }) => {
   let labels: string[] = [];
   let usage21: number[] = [];
   let usage22: number[] = [];
   let usage23: number[] = [];
   let usage24: number[] = [];
   let usage25: number[] = [];
-  let week21: number = 1;
-  let week22: number = 1;
-  let week23: number = 1;
-  let week24: number = 1;
-  let week25: number = 1;
+  let weekNumber: number = 1;
 
   data.allPostcodeCsv.edges.forEach(
     (item: {
@@ -48,24 +44,20 @@ const UsagePage = ({ data }) => {
 
       if (item.node.EndDate_first.endsWith("2021")) {
         usage21.push(item.node.Count);
-        labels.push("Week " + week21++);
+        labels.push("Week " + weekNumber++);
       }
       if (item.node.EndDate_first.endsWith("2022")) {
         usage22.push(item.node.Count);
-        // labels.push("Week " + week22++);
       }
       if (item.node.EndDate_first.endsWith("2023")) {
         usage23.push(item.node.Count);
-        // labels.push("Week " + week23++);
       }
       if (item.node.EndDate_first.endsWith("2024")) {
         usage24.push(item.node.Count);
-        // labels.push("Week " + week24++);
       }
 
       if (item.node.EndDate_first.endsWith("2025")) {
         usage25.push(item.node.Count);
-        // labels.push("Week " + week25++);
       }
     }
   );
@@ -78,7 +70,7 @@ const UsagePage = ({ data }) => {
       },
       title: {
         display: true,
-        text: "Usage Evolution",
+        text: "Year-on-year Tool Usage Evolution",
       },
     },
     // scales: { y: { stacked: true } },
@@ -105,14 +97,14 @@ const UsagePage = ({ data }) => {
         label: "2023",
         data: usage23,
         borderColor: "rgb(255, 99, 250)",
-        backgroundColor: "rgba(174, 255, 99, 0.5)",
+        backgroundColor: "rgba(255, 99, 250, 0.5)",
       },
 
       {
         label: "2024",
         data: usage24,
         borderColor: "rgb(99, 156, 255)",
-        backgroundColor: "rgba(174, 255, 99, 0.5)",
+        backgroundColor: "rgba(99, 156, 255, 0.5)",
       },
 
       {
@@ -121,27 +113,6 @@ const UsagePage = ({ data }) => {
         borderColor: "rgb(255, 232, 99)",
         backgroundColor: "rgba(255, 232, 99, 0.5)",
       },
-
-      //   {
-      //     label: "Usage L18",
-      //     data: usageL18,
-      //     borderColor: "rgb(99, 156, 255)",
-      //     backgroundColor: "rgba(174, 255, 99, 0.5)",
-      //   },
-
-      //   {
-      //     label: "Usage L7",
-      //     data: usageL7,
-      //     borderColor: "rgb(172, 99, 255)",
-      //     backgroundColor: "rgba(174, 255, 99, 0.5)",
-      //   },
-
-      //   {
-      //     label: "Usage L8",
-      //     data: usageL8,
-      //     borderColor: "rgb(255, 161, 99)",
-      //     backgroundColor: "rgba(255, 161, 99, 0.5)",
-      //   },
     ],
   };
 
@@ -160,63 +131,6 @@ export const query = graphql`
         node {
           StartDate_first
           EndDate_first
-          #   CA5_sum
-          #   CH2_sum
-          #   CH41_sum
-          #   CH42_sum
-          #   CH43_sum
-          #   CH45_sum
-          #   CH46_sum
-          #   CH47_sum
-          #   CH49_sum
-          #   CH60_sum
-          #   CH61_sum
-          #   CH62_sum
-          #   CH63_sum
-          #   L1_sum
-          #   L11_sum
-          #   L12_sum
-          #   L13_sum
-          #   L14_sum
-          #   L15_sum
-          #   L16_sum
-          #   L17_sum
-          #   L18_sum
-          #   L19_sum
-          #   L2_sum
-          #   L20_sum
-          #   L21_sum
-          #   L22_sum
-          #   L23_sum
-          #   L24_sum
-          #   L25_sum
-          #   L26_sum
-          #   L28_sum
-          #   L3_sum
-          #   L31_sum
-          #   L32_sum
-          #   L33_sum
-          #   L34_sum
-          #   L35_sum
-          #   L36_sum
-          #   L37_sum
-          #   L39_sum
-          #   L4_sum
-          #   L40_sum
-          #   L5_sum
-          #   L6_sum
-          #   L7_sum
-          #   L8_sum
-          #   L9_sum
-          #   LA8_sum
-          #   M21_sum
-          #   PR8_sum
-          #   PR9_sum
-          #   SO14_sum
-          #   WA10_sum
-          #   WA7_sum
-          #   WA8_sum
-          #   WA9_sum
           Count
         }
       }
@@ -224,6 +138,6 @@ export const query = graphql`
   }
 `;
 
-export default UsagePage;
+export default YearOnYearPage;
 
 export const Head = () => <title>Superb Usage Tool</title>;
