@@ -17,6 +17,7 @@ import {
 } from "chart.js";
 import { Line } from "react-chartjs-2";
 import { _DeepPartialObject } from "chart.js/dist/types/utils";
+import StackableLine from "../components/stackable-line";
 
 ChartJS.register(
   CategoryScale,
@@ -70,7 +71,7 @@ const UsagePage = ({ data }) => {
       },
       title: {
         display: true,
-        text: "Usage Evolution",
+        text: "Evolution of Tool Usage by Gender",
       },
     },
   };
@@ -79,7 +80,7 @@ const UsagePage = ({ data }) => {
     labels,
     datasets: [
       {
-        label: "Total Usage",
+        label: "Total",
         data: usage,
         borderColor: "rgb(255, 99, 132)",
         backgroundColor: "rgba(255, 99, 132, 0.5)",
@@ -113,8 +114,7 @@ const UsagePage = ({ data }) => {
 
   return (
     <>
-      <Link to="/">Home</Link>
-      <Line options={options} data={chartData} />
+      <StackableLine chartOptions={options} chartData={chartData} />
     </>
   );
 };

@@ -14,10 +14,9 @@ import {
   DatasetChartOptions,
   ElementChartOptions,
   PluginChartOptions,
-  LineOptions,
 } from "chart.js";
-import { Line } from "react-chartjs-2";
 import { _DeepPartialObject } from "chart.js/dist/types/utils";
+import StackableLine from "../components/stackable-line";
 
 ChartJS.register(
   CategoryScale,
@@ -29,7 +28,7 @@ ChartJS.register(
   Legend
 );
 
-const UsagePage = ({ data }) => {
+const ZipPage = ({ data }) => {
   let labels: string[] = [];
   let usage: number[] = [];
 
@@ -234,7 +233,7 @@ const UsagePage = ({ data }) => {
       },
       title: {
         display: true,
-        text: "Usage Evolution",
+        text: "Evolution of Tool Usage by Postcode",
       },
       //   filler: {
       //     // fillStyle: "rgb(255, 161, 99)",
@@ -250,11 +249,10 @@ const UsagePage = ({ data }) => {
     labels,
     datasets: [
       {
-        label: "Total Usage",
+        label: "Total",
         data: usage,
         borderColor: "rgb(255, 99, 132)",
         backgroundColor: "rgba(255, 99, 132, 0.5)",
-        stack: "total",
       },
       //   {
       //     label: "Usage CA5",
@@ -683,8 +681,7 @@ const UsagePage = ({ data }) => {
 
   return (
     <>
-      <Link to="/">Home</Link>
-      <Line options={options} data={chartData} />;
+      <StackableLine chartOptions={options} chartData={chartData} />
     </>
   );
 };
@@ -760,6 +757,6 @@ export const query = graphql`
   }
 `;
 
-export default UsagePage;
+export default ZipPage;
 
 export const Head = () => <title>Superb Usage Tool</title>;
