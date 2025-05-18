@@ -24,12 +24,12 @@ ChartJS.register(
 );
 
 const YearOnYearPage = ({ data }) => {
-  let labels: string[] = [];
-  let usage21: number[] = [];
-  let usage22: number[] = [];
-  let usage23: number[] = [];
-  let usage24: number[] = [];
-  let usage25: number[] = [];
+  const labels: string[] = [];
+  const usage21: number[] = [];
+  const usage22: number[] = [];
+  const usage23: number[] = [];
+  const usage24: number[] = [];
+  const usage25: number[] = [];
   let weekNumber: number = 1;
 
   data.allPostcodeCsv.edges.forEach(

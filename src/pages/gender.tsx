@@ -29,12 +29,12 @@ ChartJS.register(
 );
 
 const GenderPage = ({ data }) => {
-  let labels: string[] = [];
-  let usage: number[] = [];
-  let usageMale: number[] = [];
-  let usageFemale: number[] = [];
-  let usageRather: number[] = [];
-  let usageNone: number[] = [];
+  const labels: string[] = [];
+  const usage: number[] = [];
+  const usageMale: number[] = [];
+  const usageFemale: number[] = [];
+  const usageRather: number[] = [];
+  const usageNone: number[] = [];
 
   data.allGenderCsv.edges.forEach(
     (item: {
