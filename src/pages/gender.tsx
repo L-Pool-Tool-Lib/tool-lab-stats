@@ -1,6 +1,6 @@
 // import * as React from "react";
 import React from "react";
-import { graphql, Link } from "gatsby";
+import { graphql } from "gatsby";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -15,7 +15,6 @@ import {
   ElementChartOptions,
   PluginChartOptions,
 } from "chart.js";
-import { Line } from "react-chartjs-2";
 import { _DeepPartialObject } from "chart.js/dist/types/utils";
 import StackableLine from "../components/stackable-line";
 
@@ -29,7 +28,7 @@ ChartJS.register(
   Legend
 );
 
-const UsagePage = ({ data }) => {
+const GenderPage = ({ data }) => {
   let labels: string[] = [];
   let usage: number[] = [];
   let usageMale: number[] = [];
@@ -137,6 +136,6 @@ export const query = graphql`
   }
 `;
 
-export default UsagePage;
+export default GenderPage;
 
 export const Head = () => <title>Superb Usage Tool</title>;
