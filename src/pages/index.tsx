@@ -11,7 +11,7 @@ const IndexPage = () => {
         <Link to="/zip">Usage sorted by postcode</Link>
       </p>
       <p>
-        <Link to="/usage">Usage sorted by gender</Link>
+        <Link to="/gender">Usage sorted by gender</Link>
       </p>
       <p>
         <Link to="/year-on-year">Year-on-year usage</Link>
