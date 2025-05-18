@@ -23,17 +23,20 @@
   },
   "dependencies": {
     "chart.js": "4.4.9",
+    "gatsby": "5.14.3",
     "gatsby-source-filesystem": "5.14.0",
     "gatsby-transformer-csv": "5.14.0",
-    "gatsby": "5.14.3",
+    "react": "18.2.0",
     "react-chartjs-2": "5.3.0",
-    "react-dom": "18.2.0",
-    "react": "18.2.0"
+    "react-dom": "18.2.0"
   },
   "devDependencies": {
+    "@eslint/js": "9.27.0",
     "@types/node": "20.11.19",
     "@types/react": "18.2.55",
     "@types/react-dom": "18.2.19",
-    "typescript": "5.3.3"
+    "eslint": "9.27.0",
+    "typescript": "5.3.3",
+    "typescript-eslint": "8.32.1"
   }
 }
