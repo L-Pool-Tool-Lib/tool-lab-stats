@@ -1,6 +1,6 @@
 // import * as React from "react";
 import React from "react";
-import { graphql } from "gatsby";
+import { graphql, Link } from "gatsby";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -111,7 +111,12 @@ const UsagePage = ({ data }) => {
     ],
   };
 
-  return <Line options={options} data={chartData} />;
+  return (
+    <>
+      <Link to="/">Home</Link>
+      <Line options={options} data={chartData} />
+    </>
+  );
 };
 
 export const query = graphql`
