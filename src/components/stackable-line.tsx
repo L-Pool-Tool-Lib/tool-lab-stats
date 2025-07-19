@@ -1,6 +1,6 @@
 // import * as React from "react";
 import React from "react";
-import { graphql, Link } from "gatsby";
+import { Link } from "gatsby";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -10,20 +10,16 @@ import {
   Title,
   Tooltip,
   Legend,
-  CoreChartOptions,
-  ElementChartOptions,
-  DatasetChartOptions,
-  PluginChartOptions,
-  ScaleChartOptions,
+  BarElement,
 } from "chart.js";
 import { Line } from "react-chartjs-2";
-import { _DeepPartialObject } from "chart.js/dist/types/utils";
 
 ChartJS.register(
   CategoryScale,
   LinearScale,
   PointElement,
   LineElement,
+  BarElement,
   Title,
   Tooltip,
   Legend
@@ -51,26 +47,15 @@ function makeStackable(
     )[];
   }
 ) {
-  // const chartData = {
-  // labels,
-  // datasets: [
-  //   {
-  //     label: "Total Usage",
-  //     data: usage,
-  //     borderColor: "rgb(255, 99, 132)",
-  //     backgroundColor: "rgba(255, 99, 132, 0.5)",
-  //     // stack: "total",
-  //   },
-
-  // const stackableDataset
-  // for (let dataset: {} of chartData.datasets) {
   const datasets = chartData.datasets.map((dataset) => {
     if (dataset.label !== "Total" && stackStatus === "unstack") {
       {
         dataset.stack = stackStatus;
+        dataset.type = "bar";
       }
     } else {
       dataset.stack = undefined;
+      dataset.type = "line";
     }
     return dataset;
   });
