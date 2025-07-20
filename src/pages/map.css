@@ -1,0 +1,41 @@
+div.info {
+  color: black;
+  width: 100%;
+  display: flex;
+}
+
+div.slider {
+  width: 20%;
+  flex: content;
+  align-items: center;
+  height: 100%;
+}
+
+div.scale {
+  color: white;
+  width: 80%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.scale p {
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+
+input {
+  width: 100%;
+  align-self: center;
+}
+
+p {
+  width: 100%;
+  margin: auto;
+  text-align: center;
+}
+
+div.scale > div {
+  width: 10%;
+}
