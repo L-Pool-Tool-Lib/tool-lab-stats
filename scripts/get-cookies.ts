@@ -21,10 +21,7 @@ function parseCookies(cookieObjList: CookieObj[]): string {
 }
 
 export async function getCookies() {
-  // TODO: run headless
   dotenv.config();
-
-  // console.log(process.env);
 
   const gettingCookie = "Getting cookies";
   console.time(gettingCookie);
