@@ -1,4 +1,4 @@
-import path from "path";
+import { join } from "path";
 import process from "process";
 import dotenv from "dotenv";
 import { getCookies } from "./get-cookies.ts";
@@ -88,9 +88,9 @@ async function main() {
     process.exit(1);
   }
 
-  const outDir = path.join(process.cwd(), "data", "users");
+  const outDir = join(process.cwd(), "data", "users");
   mkdirSync(outDir, { recursive: true });
-  const outPath = path.join(outDir, `${userId}.csv`);
+  const outPath = join(outDir, `${userId}.csv`);
   const buffer = Buffer.from(await resp.arrayBuffer());
   writeFileSync(outPath, buffer);
   // TODO: improve rate limiting
