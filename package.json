@@ -4,6 +4,7 @@
   "private": true,
   "description": "tool-lab-stats",
   "author": "Damien Rembert",
+  "type": "module",
   "keywords": [
     "gatsby"
   ],
