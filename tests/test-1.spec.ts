@@ -12,8 +12,9 @@ test('test', async ({ page }) => {
 
   const username = process.env.MT_USERNAME ? process.env.MT_USERNAME : "";
   const password = process.env.MT_PASSWORD ? process.env.MT_PASSWORD : "";
+  const baseUrl = process.env.MT_API_URL ? process.env.MT_API_URL : "";
 
-
+  await page.goto(`${baseUrl}/library/myTurnLogin/auth`);
   await page.getByRole("textbox", { name: "Username" }).click();
   await page.getByRole("textbox", { name: "Username" }).fill(username);
   await page.getByRole("textbox", { name: "Password" }).click();
