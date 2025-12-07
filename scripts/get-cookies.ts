@@ -20,7 +20,7 @@ try {
   const password = process.env.MT_PASSWORD ? process.env.MT_PASSWORD : "";
   const baseUrl = process.env.MT_API_URL ? process.env.MT_API_URL : "";
 
-  await page.goto(`${baseUrl}/library/myTurnLogin/auth`);
+    await page.goto(`https://${baseUrl}/library/myTurnLogin/auth`);
   await page.getByRole("textbox", { name: "Username" }).click();
   await page.getByRole("textbox", { name: "Username" }).fill(username);
   await page.getByRole("textbox", { name: "Password" }).click();
@@ -34,7 +34,7 @@ try {
     console.error("failed to log in.");
     exit();
   }
-  await page.goto(`${baseUrl}/library/orgLoan/list`);
+    await page.goto(`https://${baseUrl}/library/orgLoan/list`);
   await page.getByRole("button", { name: "CSV" }).click();
 
   cookies = await context.cookies();
