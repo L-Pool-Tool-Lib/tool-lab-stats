@@ -3,12 +3,13 @@ import fs from "fs/promises";
 import path from "path";
 import process from "process";
 import dotenv from "dotenv";
+import { getCookies } from "./get-cookies.ts";
 
 async function main() {
   dotenv.config();
 
   const MT_API_URL = process.env.MT_API_URL;
-  const COOKIE = process.env.COOKIE;
+  const COOKIE = await getCookies();
 
   const userId = process.argv[2];
   if (!userId) {
