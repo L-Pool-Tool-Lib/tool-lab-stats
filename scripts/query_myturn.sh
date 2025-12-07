@@ -12,22 +12,22 @@ while [[ $(date --date "$end_date +$GATSBY_STEP_SIZE_IN_DAYS days" '+%s') -le $(
     formatted_start_date=$(date --date "$start_date" '+%d/%m/%Y')
     formatted_end_date=$(date --date "$end_date" '+%d/%m/%Y')
 
-    curl --location "https://$API_URL/library/orgLoan/exportAggregateLoanReport" \
-        --header "Host: $API_URL" \
+    curl --location "https://$MT_API_URL/library/orgLoan/exportAggregateLoanReport" \
+        --header "Host: $MT_API_URL" \
         --header 'Accept: */*' \
         --header 'Accept-Language: en-GB,en;q=0.7,fr;q=0.3' \
         --header 'Accept-Encoding: gzip, deflate, br' \
-        --header "Referer: https://$API_URL/" \
+        --header "Referer: https://$MT_API_URL/" \
         --header 'User-Agent: curl for ltl-usage-graph' \
         --header 'Content-type: application/x-www-form-urlencoded' \
-        --header "Origin: https://$API_URL" \
+        --header "Origin: https://$MT_API_URL" \
         --header 'DNT: 1' \
         --header 'Connection: keep-alive' \
         --header "Cookie: $COOKIE" \
         --header 'Sec-Fetch-Dest: empty' \
         --header 'Sec-Fetch-Mode: cors' \
         --header 'Sec-Fetch-Site: same-origin' \
-        --header "host: $API_URL" \
+        --header "host: $MT_API_URL" \
         --data-urlencode "from_date=$formatted_start_date" \
         --data-urlencode 'from=struct' \
         --data-urlencode 'from_tz=Europe/London' \

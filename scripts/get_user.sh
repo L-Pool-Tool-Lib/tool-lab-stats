@@ -4,22 +4,22 @@ source .env.development
 
 USER_ID=$1
 
-curl --location "https://$API_URL/library/orgLoan/exportLoans" \
-    --header "Host: $API_URL" \
+curl --location "https://$MT_API_URL/library/orgLoan/exportLoans" \
+    --header "Host: $MT_API_URL" \
     --header 'User-Agent: curl for ltl-usage-graph' \
     --header 'Accept: */*' \
     --header 'Accept-Language: en-GB,en;q=0.7,fr;q=0.3' \
     --header 'Accept-Encoding: gzip, deflate, br, zstd' \
-    --header "Referer: https://$API_URL/" \
+    --header "Referer: https://$MT_API_URL/" \
     --header 'Content-type: application/x-www-form-urlencoded' \
-    --header "Origin: https://$API_URL" \
+    --header "Origin: https://$MT_API_URL" \
     --header 'DNT: 1' \
     --header 'Connection: keep-alive' \
     --header "Cookie: $COOKIE" \
     --header 'Sec-Fetch-Dest: empty' \
     --header 'Sec-Fetch-Mode: cors' \
     --header 'Sec-Fetch-Site: same-origin' \
-    --header "host: $API_URL" \
+    --header "host: $MT_API_URL" \
     --data-urlencode "borrowedBy.id=$USER_ID" \
     --data-urlencode 'item.id=' \
     --data-urlencode 'checkedOutBefore=struct' \
