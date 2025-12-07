@@ -1,9 +1,8 @@
-// ...existing code...
-import fs from "fs/promises";
 import path from "path";
 import process from "process";
 import dotenv from "dotenv";
 import { getCookies } from "./get-cookies.ts";
+import { mkdirSync, writeFileSync } from "fs";
 
 async function main() {
   dotenv.config();
@@ -67,7 +66,6 @@ async function main() {
   params.set("dueAfter", "struct");
   params.set("dueAfter_date", "");
   params.set("dueAfter_time", "00:00");
-  // keep the same key as the original script (typo preserved)
   params.set("dueOutAfter_tz", "Europe/London");
   params.set("location.id", "");
   params.set("out", "");
@@ -91,11 +89,11 @@ async function main() {
   }
 
   const outDir = path.join(process.cwd(), "data", "users");
-  await fs.mkdir(outDir, { recursive: true });
+  mkdirSync(outDir, { recursive: true });
   const outPath = path.join(outDir, `${userId}.csv`);
   const buffer = Buffer.from(await resp.arrayBuffer());
-  await fs.writeFile(outPath, buffer);
-  // mimic original sleep
+  writeFileSync(outPath, buffer);
+  // TODO: improve rate limiting
   await new Promise((r) => setTimeout(r, 3000));
   console.log(`Saved ${outPath}`);
 }
