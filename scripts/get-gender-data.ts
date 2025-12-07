@@ -36,7 +36,9 @@ function formatDMY(d: Date) {
 }
 
 async function main() {
-  dotenv.config();
+  dotenv.config({
+    path: ".env.development",
+  });
 
   const {
     GATSBY_RANGE_START_DATE,

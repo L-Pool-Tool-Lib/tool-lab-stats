@@ -5,7 +5,9 @@ import { getCookies } from "./get-cookies.ts";
 import { mkdirSync, writeFileSync } from "fs";
 
 async function main() {
-  dotenv.config();
+  dotenv.config({
+    path: ".env.development",
+  });
 
   const MT_API_URL = process.env.MT_API_URL;
   const COOKIE = await getCookies();

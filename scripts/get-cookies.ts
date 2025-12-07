@@ -21,7 +21,9 @@ function parseCookies(cookieObjList: CookieObj[]): string {
 }
 
 export async function getCookies() {
-  dotenv.config();
+  dotenv.config({
+    path: ".env.development",
+  });
 
   const gettingCookie = "Getting cookies";
   console.time(gettingCookie);
