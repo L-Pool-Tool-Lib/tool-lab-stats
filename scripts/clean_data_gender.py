@@ -32,10 +32,14 @@ def clean_data(df):
         ],
         axis=1,
     )
-    # Rename column 'Value_would rather not say' to 'Value_would_rather_not_say'
-    df = df.rename(columns={"Value_would rather not say": "Value_would_rather_not_say"})
+
     # Replace all booleans with 0 or 1
     df = df.rename(columns={"Filename_0": "Start Date"})
+    df = df.rename(columns={"Value_OTHER": "Value_other"})
+    df = df.rename(columns={"Value_FEMALE": "Value_female"})
+    df = df.rename(columns={"Value_MALE": "Value_male"})
+    df = df.rename(columns={"Value_UNSPECIFIED": "Value_unspecified"})
+
     df.loc[df["Value_female"] == False, "Value_female"] = 0
     df.loc[df["Value_female"] == True, "Value_female"] = 1
     df.loc[df["Value_[None]"] == False, "Value_[None]"] = 0
@@ -44,14 +48,14 @@ def clean_data(df):
     df.loc[df["Value_male"] == True, "Value_male"] = 1
     df.loc[df["Value_other"] == False, "Value_other"] = 0
     df.loc[df["Value_other"] == True, "Value_other"] = 1
-    df.loc[df["Value_would_rather_not_say"] == False, "Value_would_rather_not_say"] = 0
-    df.loc[df["Value_would_rather_not_say"] == True, "Value_would_rather_not_say"] = 1
+    df.loc[df["Value_unspecified"] == False, "Value_unspecified"] = 0
+    df.loc[df["Value_unspecified"] == True, "Value_unspecified"] = 1
     # create new columns
     df["male"] = df["Value_male"] * df["Count"]
     df["female"] = df["Value_female"] * df["Count"]
     df["none"] = df["Value_[None]"] * df["Count"]
     df["other"] = df["Value_other"] * df["Count"]
-    df["would_rather_not_say"] = df["Value_would_rather_not_say"] * df["Count"]
+    df["unspecified"] = df["Value_unspecified"] * df["Count"]
     # Drop columns: 'Value_[None]', 'Value_female' and 3 other columns
     df = df.drop(
         columns=[
@@ -59,7 +63,7 @@ def clean_data(df):
             "Value_female",
             "Value_male",
             "Value_other",
-            "Value_would_rather_not_say",
+            "Value_unspecified",
         ]
     )
     # Drop column: 'Amount'
@@ -76,8 +80,8 @@ def clean_data(df):
     df = df.astype({"none": "int64"})
     # Change column type to int64 for column: 'male'
     df = df.astype({"male": "int64"})
-    # Change column type to int64 for columns: 'other', 'would_rather_not_say'
-    df = df.astype({"other": "int64", "would_rather_not_say": "int64"})
+    # Change column type to int64 for columns: 'other', 'unspecified'
+    df = df.astype({"other": "int64", "unspecified": "int64"})
     # Performed 7 aggregations grouped on column: 'start_date_time'
     df = (
         df.groupby(["start_date_time"])
@@ -87,7 +91,7 @@ def clean_data(df):
             male_sum=("male", "sum"),
             female_sum=("female", "sum"),
             none_sum=("none", "sum"),
-            would_rather_not_say_sum=("would_rather_not_say", "sum"),
+            unspecified_sum=("unspecified", "sum"),
             Count_sum=("Count", "sum"),
         )
         .reset_index()
