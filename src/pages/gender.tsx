@@ -43,7 +43,7 @@ const GenderPage = ({ data }) => {
         male_sum: number;
         female_sum: number;
         none_sum: number;
-        would_rather_not_say_sum: number;
+        unspecified_sum: number;
         StartDate_first: string;
         EndDate_first: string;
       };
@@ -52,7 +52,7 @@ const GenderPage = ({ data }) => {
       usageMale.push(item.node.male_sum);
       usageFemale.push(item.node.female_sum);
       usageRather.push(item.node.none_sum);
-      usageNone.push(item.node.would_rather_not_say_sum);
+      usageNone.push(item.node.unspecified_sum);
       labels.push(item.node.StartDate_first + " to " + item.node.EndDate_first);
     }
   );
@@ -128,7 +128,7 @@ export const query = graphql`
           male_sum
           female_sum
           none_sum
-          would_rather_not_say_sum
+          unspecified_sum
           Count_sum
         }
       }
