@@ -69,7 +69,7 @@ async function main() {
     process.exit(1);
   }
 
-    const COOKIE = await getCookies();
+  const COOKIE = await getCookies();
   
 
   let startDate = parseDateStrict(GATSBY_RANGE_START_DATE);
@@ -79,8 +79,16 @@ async function main() {
   const outDirBase = join(process.cwd(), "data", AGGREGATE_ATTRIBUTE);
   mkdirSync(outDirBase, { recursive: true });
 
+  const gettingData = "Getting all the data."
+  console.time(gettingData);
+
+  let loops = 0;
+
+  const sleepDurationMs = 3000;
+
   while (addDays(endDate, stepDays).getTime() <= rangeEndDate.getTime()) {
-    console.log(`Starting, getting: ${formatYMD(startDate)}`);
+    console.log(`Getting: ${formatYMD(startDate)}`);
+    loops++
 
     const formattedStart = formatDMY(startDate);
     const formattedEnd = formatDMY(endDate);
@@ -143,7 +151,7 @@ async function main() {
     const buffer = Buffer.from(await resp.arrayBuffer());
     writeFileSync(outPath, buffer);
     // sleep 3 seconds like the original
-    await sleep(3000);
+    await sleep(sleepDurationMs);
 
     // Increment dates matching original script logic
     startDate = addDays(endDate, 1); // start_date=$(date --date "$end_date +1 day")
@@ -151,6 +159,8 @@ async function main() {
   }
 
   console.log("Done.");
+  console.timeEnd(gettingData);
+  console.log(`Including ${sleepDurationMs * loops / 1000} seconds of sleep.`)
 }
 
 // if (require.main === module) {
