@@ -12,6 +12,7 @@ import process from "process";
 async function mergeDir(dirName: string) {
   const cwd = process.cwd();
   const dir = join(cwd, "data", dirName);
+  // const masterFile = join(dir, dirName + "collection.csv");
   const masterFile = join(dir, "collection.csv");
 
   // Ensure directory exists
@@ -55,6 +56,6 @@ async function main() {
   }
 }
 
-if (require.main === module) {
+// if (require.main === module) {
   main();
-}
+// }

@@ -24,10 +24,24 @@ async function main() {
   ]);
 
   // 2) Split Filename_clean into Start Date and End Date, drop original
-  const df2 = df1.withColumns([
-    pl.col("Filename_clean").str().splitExact("-to-", 2).arr().get(0).alias("Start Date"),
-    pl.col("Filename_clean").str().splitExact("-to-", 2).arr().get(1).alias("End Date"),
-  ]).drop(["Filename", "Filename_clean"]);
+  const df2 = df1
+    .withColumns([
+      pl
+        .col("Filename_clean")
+        .str()
+        .splitExact("-to-", 2)
+        .arr()
+        .get(0)
+        .alias("Start Date"),
+      pl
+        .col("Filename_clean")
+        .str()
+        .splitExact("-to-", 2)
+        .arr()
+        .get(1)
+        .alias("End Date"),
+    ])
+    .drop(["Filename", "Filename_clean"]);
 
   // 3) Reformat Start/End dates from YYYY-MM-DD to DD/MM/YYYY if needed
   const df3 = df2.withColumns([
@@ -65,9 +79,7 @@ async function main() {
 
   // 7) Convert boolean-like dummy columns to integers if necessary
   const boolToIntCols = df4.columns.filter((c) => c.startsWith("Value_"));
-  const castExprs = boolToIntCols.map((c) =>
-    pl.col(c).cast(pl.Int64).alias(c)
-  );
+  const castExprs = boolToIntCols.map((c) => pl.col(c).cast(pl.Int64).alias(c));
   df4 = df4.withColumns(castExprs);
 
   // 8) Create aggregated gender columns
