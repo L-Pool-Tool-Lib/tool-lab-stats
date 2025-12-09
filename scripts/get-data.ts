@@ -2,7 +2,7 @@ import dotenv from "dotenv";
 import { mkdirSync, writeFileSync } from "fs";
 import { join } from "path";
 import process from "process";
-import { getCookies } from "./get-cookies.ts";
+import { getCookies } from "./get-cookies.mts";
 
 async function sleep(ms: number) {
   return new Promise((r) => setTimeout(r, ms));
@@ -70,7 +70,6 @@ async function main() {
   }
 
   const COOKIE = await getCookies();
-  
 
   let startDate = parseDateStrict(GATSBY_RANGE_START_DATE);
   let endDate = addDays(startDate, stepDays);
@@ -79,7 +78,7 @@ async function main() {
   const outDirBase = join(process.cwd(), "data", AGGREGATE_ATTRIBUTE);
   mkdirSync(outDirBase, { recursive: true });
 
-  const gettingData = "Getting all the data."
+  const gettingData = "Getting all the data.";
   console.time(gettingData);
 
   let loops = 0;
@@ -88,7 +87,7 @@ async function main() {
 
   while (addDays(endDate, stepDays).getTime() <= rangeEndDate.getTime()) {
     console.log(`Getting: ${formatYMD(startDate)}`);
-    loops++
+    loops++;
 
     const formattedStart = formatDMY(startDate);
     const formattedEnd = formatDMY(endDate);
@@ -160,12 +159,14 @@ async function main() {
 
   console.log("Done.");
   console.timeEnd(gettingData);
-  console.log(`Including ${sleepDurationMs * loops / 1000} seconds of sleep.`)
+  console.log(
+    `Including ${(sleepDurationMs * loops) / 1000} seconds of sleep.`
+  );
 }
 
 // if (require.main === module) {
-  main().catch((err) => {
-    console.error(err);
-    process.exit(1);
-  });
+main().catch((err) => {
+  console.error(err);
+  process.exit(1);
+});
 // }
