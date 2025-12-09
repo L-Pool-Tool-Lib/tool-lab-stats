@@ -35,7 +35,7 @@ function formatDMY(d: Date) {
   return `${dd}/${mm}/${yyyy}`;
 }
 
-async function main() {
+async function getDataForAggregate(aggregate: string) {
   dotenv.config({
     path: ".env.development",
   });
@@ -45,7 +45,6 @@ async function main() {
     GATSBY_RANGE_END_DATE,
     GATSBY_STEP_SIZE_IN_DAYS,
     MT_API_URL,
-    AGGREGATE_ATTRIBUTE,
   } = process.env;
 
   if (
@@ -58,8 +57,8 @@ async function main() {
     );
     process.exit(1);
   }
-  if (!MT_API_URL || !AGGREGATE_ATTRIBUTE) {
-    console.error("Missing MT_API_URL, COOKIE or AGGREGATE_ATTRIBUTE in env");
+  if (!MT_API_URL) {
+    console.error("Missing MT_API_URL in env");
     process.exit(1);
   }
 
@@ -75,7 +74,7 @@ async function main() {
   let endDate = addDays(startDate, stepDays);
   const rangeEndDate = parseDateStrict(GATSBY_RANGE_END_DATE);
 
-  const outDirBase = join(process.cwd(), "data", AGGREGATE_ATTRIBUTE);
+  const outDirBase = join(process.cwd(), "data", aggregate);
   mkdirSync(outDirBase, { recursive: true });
 
   const gettingData = "Getting all the data.";
@@ -121,7 +120,7 @@ async function main() {
     params.set("to", "struct");
     params.set("to_tz", "Europe/London");
     params.set("to_time", "23:59");
-    params.set("aggregateAttribute", AGGREGATE_ATTRIBUTE);
+    params.set("aggregateAttribute", aggregate);
     params.set("location.id", "2806");
     params.set("format", "csv");
     params.set("extension", "csv");
@@ -164,9 +163,13 @@ async function main() {
   );
 }
 
-// if (require.main === module) {
-main().catch((err) => {
-  console.error(err);
-  process.exit(1);
-});
-// }
+export async function getDataForGender() {
+  await getDataForAggregate("sex");
+}
+
+export async function getDataForPostcode() {
+  await getDataForAggregate("zip");
+}
+
+await getDataForGender();
+await getDataForPostcode();

@@ -1,7 +1,7 @@
 import { join } from "path";
 import process from "process";
 import dotenv from "dotenv";
-import { getCookies } from "./get-cookies.ts";
+import { getCookies } from "./get-cookies.mts";
 import { mkdirSync, writeFileSync } from "fs";
 
 async function main() {
@@ -14,11 +14,11 @@ async function main() {
 
   const userId = process.argv[2];
   if (!userId) {
-    console.error("Usage: node scripts/get_user.ts <USER_ID>");
+    console.error("Usage: node scripts/get_user.mts <USER_ID>");
     process.exit(1);
   }
-  if (!MT_API_URL || !COOKIE) {
-    console.error("MT_API_URL or COOKIE not set in environment");
+  if (!MT_API_URL) {
+    console.error("MT_API_URL not set in environment");
     process.exit(1);
   }
 
