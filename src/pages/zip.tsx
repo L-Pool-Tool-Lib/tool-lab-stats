@@ -1,6 +1,6 @@
 // import * as React from "react";
 import React from "react";
-import { graphql, Link } from "gatsby";
+import { graphql } from "gatsby";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -10,13 +10,11 @@ import {
   Title,
   Tooltip,
   Legend,
-  CoreChartOptions,
-  DatasetChartOptions,
-  ElementChartOptions,
-  PluginChartOptions,
 } from "chart.js";
-import { _DeepPartialObject } from "chart.js/dist/types/utils";
-import StackableLine from "../components/stackable-line";
+import StackableLine, {
+  StackyChartData,
+  StackyChartOptions,
+} from "../components/stackable-line";
 
 ChartJS.register(
   CategoryScale,
@@ -25,7 +23,7 @@ ChartJS.register(
   LineElement,
   Title,
   Tooltip,
-  Legend
+  Legend,
 );
 
 const ZipPage = ({ data }) => {
@@ -217,16 +215,16 @@ const ZipPage = ({ data }) => {
       usageWA9.push(item.node.WA9_sum);
 
       labels.push(item.node.StartDate_first + " to " + item.node.EndDate_first);
-    }
+    },
   );
 
-  const options: _DeepPartialObject<
-    CoreChartOptions<"line"> &
-      ElementChartOptions<"line"> &
-      PluginChartOptions<"line"> &
-      DatasetChartOptions<"line">
-  > = {
+  const options: StackyChartOptions = {
     responsive: true,
+    // elements: {
+    //   line: {
+    //     tension: 0.4,
+    //   },
+    // },
     plugins: {
       legend: {
         position: "top",
@@ -245,111 +243,111 @@ const ZipPage = ({ data }) => {
     },
   };
 
-  const chartData = {
+  const chartData: StackyChartData = {
     labels,
     datasets: [
       {
         label: "Total",
         data: usage,
         borderColor: "rgb(255, 99, 132)",
-        backgroundColor: "rgba(255, 99, 132, 0.5)",
+        backgroundColor: "rgba(255, 99, 132, 9.9)",
       },
       //   {
       //     label: "Usage CA5",
       //     data: usageCA5,
       //     borderColor: "rgb(174, 255, 99)",
-      //     backgroundColor: "rgba(174, 255, 99, 0.5)",
+      //     backgroundColor: "rgba(174, 255, 99, 0.8)",
       //   },
 
       //   {
       //     label: "Usage CH2",
       //     data: usageCH2,
       //     borderColor: "rgb(174, 255, 99)",
-      //     backgroundColor: "rgba(174, 255, 99, 0.5)",
+      //     backgroundColor: "rgba(174, 255, 99, 0.8)",
       //   },
 
       //   {
       //     label: "Usage CH41",
       //     data: usageCH41,
       //     borderColor: "rgb(174, 255, 99)",
-      //     backgroundColor: "rgba(174, 255, 99, 0.5)",
+      //     backgroundColor: "rgba(174, 255, 99, 0.8)",
       //   },
 
       //   {
       //     label: "Usage CH42",
       //     data: usageCH42,
       //     borderColor: "rgb(174, 255, 99)",
-      //     backgroundColor: "rgba(174, 255, 99, 0.5)",
+      //     backgroundColor: "rgba(174, 255, 99, 0.8)",
       //   },
 
       //   {
       //     label: "Usage CH43",
       //     data: usageCH43,
       //     borderColor: "rgb(174, 255, 99)",
-      //     backgroundColor: "rgba(174, 255, 99, 0.5)",
+      //     backgroundColor: "rgba(174, 255, 99, 0.8)",
       //   },
 
       //   {
       //     label: "Usage CH45",
       //     data: usageCH45,
       //     borderColor: "rgb(174, 255, 99)",
-      //     backgroundColor: "rgba(174, 255, 99, 0.5)",
+      //     backgroundColor: "rgba(174, 255, 99, 0.8)",
       //   },
 
       //   {
       //     label: "Usage CH46",
       //     data: usageCH46,
       //     borderColor: "rgb(174, 255, 99)",
-      //     backgroundColor: "rgba(174, 255, 99, 0.5)",
+      //     backgroundColor: "rgba(174, 255, 99, 0.8)",
       //   },
 
       //   {
       //     label: "Usage CH47",
       //     data: usageCH47,
       //     borderColor: "rgb(174, 255, 99)",
-      //     backgroundColor: "rgba(174, 255, 99, 0.5)",
+      //     backgroundColor: "rgba(174, 255, 99, 0.8)",
       //   },
 
       //   {
       //     label: "Usage CH49",
       //     data: usageCH49,
       //     borderColor: "rgb(174, 255, 99)",
-      //     backgroundColor: "rgba(174, 255, 99, 0.5)",
+      //     backgroundColor: "rgba(174, 255, 99, 0.8)",
       //   },
 
       //   {
       //     label: "Usage CH60",
       //     data: usageCH60,
       //     borderColor: "rgb(174, 255, 99)",
-      //     backgroundColor: "rgba(174, 255, 99, 0.5)",
+      //     backgroundColor: "rgba(174, 255, 99, 0.8)",
       //   },
 
       //   {
       //     label: "Usage CH61",
       //     data: usageCH61,
       //     borderColor: "rgb(174, 255, 99)",
-      //     backgroundColor: "rgba(174, 255, 99, 0.5)",
+      //     backgroundColor: "rgba(174, 255, 99, 0.8)",
       //   },
 
       //   {
       //     label: "Usage CH62",
       //     data: usageCH62,
       //     borderColor: "rgb(174, 255, 99)",
-      //     backgroundColor: "rgba(174, 255, 99, 0.5)",
+      //     backgroundColor: "rgba(174, 255, 99, 0.8)",
       //   },
 
       //   {
       //     label: "Usage CH63",
       //     data: usageCH63,
       //     borderColor: "rgb(174, 255, 99)",
-      //     backgroundColor: "rgba(174, 255, 99, 0.5)",
+      //     backgroundColor: "rgba(174, 255, 99, 0.8)",
       //   },
 
       {
         label: "Usage L1",
         data: usageL1,
         borderColor: "rgb(174, 255, 99)",
-        backgroundColor: "rgba(174, 255, 99, 0.5)",
+        backgroundColor: "rgba(174, 255, 99, 9.9)",
         // stack: stacking == "" ? null : stacking,
       },
 
@@ -357,35 +355,35 @@ const ZipPage = ({ data }) => {
       //     label: "Usage L11",
       //     data: usageL11,
       //     borderColor: "rgb(174, 255, 99)",
-      //     backgroundColor: "rgba(174, 255, 99, 0.5)",
+      //     backgroundColor: "rgba(174, 255, 99, 0.8)",
       //   },
 
       //   {
       //     label: "Usage L12",
       //     data: usageL12,
       //     borderColor: "rgb(174, 255, 99)",
-      //     backgroundColor: "rgba(174, 255, 99, 0.5)",
+      //     backgroundColor: "rgba(174, 255, 99, 0.8)",
       //   },
 
       //   {
       //     label: "Usage L13",
       //     data: usageL13,
       //     borderColor: "rgb(174, 255, 99)",
-      //     backgroundColor: "rgba(174, 255, 99, 0.5)",
+      //     backgroundColor: "rgba(174, 255, 99, 0.8)",
       //   },
 
       //   {
       //     label: "Usage L14",
       //     data: usageL14,
       //     borderColor: "rgb(174, 255, 99)",
-      //     backgroundColor: "rgba(174, 255, 99, 0.5)",
+      //     backgroundColor: "rgba(174, 255, 99, 0.8)",
       //   },
 
       {
         label: "Usage L15",
         data: usageL15,
         borderColor: "rgb(255, 99, 250)",
-        backgroundColor: "rgba(174, 255, 99, 0.5)",
+        backgroundColor: "rgba(174, 255, 99, 9.9)",
         // stack: stacking == "" ? null : stacking,
       },
 
@@ -393,7 +391,7 @@ const ZipPage = ({ data }) => {
         label: "Usage L16",
         data: usageL16,
         borderColor: "rgb(174, 255, 99)",
-        backgroundColor: "rgba(174, 255, 99, 0.5)",
+        backgroundColor: "rgba(174, 255, 99, 9.9)",
         // stack: stacking == "" ? null : stacking,
       },
 
@@ -401,7 +399,7 @@ const ZipPage = ({ data }) => {
         label: "Usage L17",
         data: usageL17,
         borderColor: "rgb(255, 232, 99)",
-        backgroundColor: "rgba(255, 232, 99, 0.5)",
+        backgroundColor: "rgba(255, 232, 99, 9.9)",
         // stack: stacking == "" ? null : stacking,
       },
 
@@ -409,7 +407,7 @@ const ZipPage = ({ data }) => {
         label: "Usage L18",
         data: usageL18,
         borderColor: "rgb(99, 156, 255)",
-        backgroundColor: "rgba(174, 255, 99, 0.5)",
+        backgroundColor: "rgba(174, 255, 99, 0.74)",
         // stack: stacking == "" ? null : stacking,
       },
 
@@ -417,168 +415,168 @@ const ZipPage = ({ data }) => {
       //     label: "Usage L19",
       //     data: usageL19,
       //     borderColor: "rgb(174, 255, 99)",
-      //     backgroundColor: "rgba(174, 255, 99, 0.5)",
+      //     backgroundColor: "rgba(174, 255, 99, 0.8)",
       //   },
 
       //   {
       //     label: "Usage L2",
       //     data: usageL2,
       //     borderColor: "rgb(174, 255, 99)",
-      //     backgroundColor: "rgba(174, 255, 99, 0.5)",
+      //     backgroundColor: "rgba(174, 255, 99, 0.8)",
       //   },
 
       //   {
       //     label: "Usage L20",
       //     data: usageL20,
       //     borderColor: "rgb(174, 255, 99)",
-      //     backgroundColor: "rgba(174, 255, 99, 0.5)",
+      //     backgroundColor: "rgba(174, 255, 99, 0.8)",
       //   },
 
       //   {
       //     label: "Usage L21",
       //     data: usageL21,
       //     borderColor: "rgb(174, 255, 99)",
-      //     backgroundColor: "rgba(174, 255, 99, 0.5)",
+      //     backgroundColor: "rgba(174, 255, 99, 0.8)",
       //   },
 
       //   {
       //     label: "Usage L22",
       //     data: usageL22,
       //     borderColor: "rgb(174, 255, 99)",
-      //     backgroundColor: "rgba(174, 255, 99, 0.5)",
+      //     backgroundColor: "rgba(174, 255, 99, 0.8)",
       //   },
 
       //   {
       //     label: "Usage L23",
       //     data: usageL23,
       //     borderColor: "rgb(174, 255, 99)",
-      //     backgroundColor: "rgba(174, 255, 99, 0.5)",
+      //     backgroundColor: "rgba(174, 255, 99, 0.8)",
       //   },
 
       //   {
       //     label: "Usage L24",
       //     data: usageL24,
       //     borderColor: "rgb(174, 255, 99)",
-      //     backgroundColor: "rgba(174, 255, 99, 0.5)",
+      //     backgroundColor: "rgba(174, 255, 99, 0.8)",
       //   },
 
       //   {
       //     label: "Usage L25",
       //     data: usageL25,
       //     borderColor: "rgb(174, 255, 99)",
-      //     backgroundColor: "rgba(174, 255, 99, 0.5)",
+      //     backgroundColor: "rgba(174, 255, 99, 0.8)",
       //   },
 
       //   {
       //     label: "Usage L26",
       //     data: usageL26,
       //     borderColor: "rgb(174, 255, 99)",
-      //     backgroundColor: "rgba(174, 255, 99, 0.5)",
+      //     backgroundColor: "rgba(174, 255, 99, 0.8)",
       //   },
 
       //   {
       //     label: "Usage L28",
       //     data: usageL28,
       //     borderColor: "rgb(174, 255, 99)",
-      //     backgroundColor: "rgba(174, 255, 99, 0.5)",
+      //     backgroundColor: "rgba(174, 255, 99, 0.8)",
       //   },
 
       // {
       //   label: "Usage L3",
       //   data: usageL3,
       //   borderColor: "rgb(174, 255, 99)",
-      //   backgroundColor: "rgba(174, 255, 99, 0.5)",
+      //   backgroundColor: "rgba(174, 255, 99, 0.8)",
       // },
 
       //   {
       //     label: "Usage L31",
       //     data: usageL31,
       //     borderColor: "rgb(174, 255, 99)",
-      //     backgroundColor: "rgba(174, 255, 99, 0.5)",
+      //     backgroundColor: "rgba(174, 255, 99, 0.8)",
       //   },
 
       //   {
       //     label: "Usage L32",
       //     data: usageL32,
       //     borderColor: "rgb(174, 255, 99)",
-      //     backgroundColor: "rgba(174, 255, 99, 0.5)",
+      //     backgroundColor: "rgba(174, 255, 99, 0.8)",
       //   },
 
       //   {
       //     label: "Usage L33",
       //     data: usageL33,
       //     borderColor: "rgb(174, 255, 99)",
-      //     backgroundColor: "rgba(174, 255, 99, 0.5)",
+      //     backgroundColor: "rgba(174, 255, 99, 0.8)",
       //   },
 
       //   {
       //     label: "Usage L34",
       //     data: usageL34,
       //     borderColor: "rgb(174, 255, 99)",
-      //     backgroundColor: "rgba(174, 255, 99, 0.5)",
+      //     backgroundColor: "rgba(174, 255, 99, 0.8)",
       //   },
 
       //   {
       //     label: "Usage L35",
       //     data: usageL35,
       //     borderColor: "rgb(174, 255, 99)",
-      //     backgroundColor: "rgba(174, 255, 99, 0.5)",
+      //     backgroundColor: "rgba(174, 255, 99, 0.8)",
       //   },
 
       //   {
       //     label: "Usage L36",
       //     data: usageL36,
       //     borderColor: "rgb(174, 255, 99)",
-      //     backgroundColor: "rgba(174, 255, 99, 0.5)",
+      //     backgroundColor: "rgba(174, 255, 99, 0.8)",
       //   },
 
       //   {
       //     label: "Usage L37",
       //     data: usageL37,
       //     borderColor: "rgb(174, 255, 99)",
-      //     backgroundColor: "rgba(174, 255, 99, 0.5)",
+      //     backgroundColor: "rgba(174, 255, 99, 0.8)",
       //   },
 
       //   {
       //     label: "Usage L39",
       //     data: usageL39,
       //     borderColor: "rgb(174, 255, 99)",
-      //     backgroundColor: "rgba(174, 255, 99, 0.5)",
+      //     backgroundColor: "rgba(174, 255, 99, 0.8)",
       //   },
 
       // {
       //   label: "Usage L4",
       //   data: usageL4,
       //   borderColor: "rgb(174, 255, 99)",
-      //   backgroundColor: "rgba(174, 255, 99, 0.5)",
+      //   backgroundColor: "rgba(174, 255, 99, 0.8)",
       // },
 
       //   {
       //     label: "Usage L40",
       //     data: usageL40,
       //     borderColor: "rgb(174, 255, 99)",
-      //     backgroundColor: "rgba(174, 255, 99, 0.5)",
+      //     backgroundColor: "rgba(174, 255, 99, 0.8)",
       //   },
 
       // {
       //   label: "Usage L5",
       //   data: usageL5,
       //   borderColor: "rgb(174, 255, 99)",
-      //   backgroundColor: "rgba(174, 255, 99, 0.5)",
+      //   backgroundColor: "rgba(174, 255, 99, 0.8)",
       // },
 
       // {
       //   label: "Usage L6",
       //   data: usageL6,
       //   borderColor: "rgb(174, 255, 99)",
-      //   backgroundColor: "rgba(174, 255, 99, 0.5)",
+      //   backgroundColor: "rgba(174, 255, 99, 0.8)",
       // },
 
       {
         label: "Usage L7",
         data: usageL7,
         borderColor: "rgb(172, 99, 255)",
-        backgroundColor: "rgba(174, 255, 99, 0.5)",
+        backgroundColor: "rgba(174, 255, 99, 9.9)",
         // stack: stacking == "" ? null : stacking,
       },
 
@@ -594,7 +592,7 @@ const ZipPage = ({ data }) => {
         label: "Usage L8",
         data: usageL8,
         borderColor: "rgb(255, 161, 99)",
-        backgroundColor: "rgba(255, 161, 99, 0.5)",
+        backgroundColor: "rgba(255, 161, 99, 9.9)",
         // stack: stacking == "" ? null : stacking,
         // fillColor: "rgba(215, 249, 63, 0.69)",
         // fill: "rgba(215, 249, 63, 0.69)",
@@ -611,70 +609,70 @@ const ZipPage = ({ data }) => {
       //   label: "Usage L9",
       //   data: usageL9,
       //   borderColor: "rgb(174, 255, 99)",
-      //   backgroundColor: "rgba(174, 255, 99, 0.5)",
+      //   backgroundColor: "rgba(174, 255, 99, 0.8)",
       // },
 
       //   {
       //     label: "Usage LA8",
       //     data: usageLA8,
       //     borderColor: "rgb(174, 255, 99)",
-      //     backgroundColor: "rgba(174, 255, 99, 0.5)",
+      //     backgroundColor: "rgba(174, 255, 99, 0.8)",
       //   },
 
       //   {
       //     label: "Usage M21",
       //     data: usageM21,
       //     borderColor: "rgb(174, 255, 99)",
-      //     backgroundColor: "rgba(174, 255, 99, 0.5)",
+      //     backgroundColor: "rgba(174, 255, 99, 0.8)",
       //   },
 
       //   {
       //     label: "Usage PR8",
       //     data: usagePR8,
       //     borderColor: "rgb(174, 255, 99)",
-      //     backgroundColor: "rgba(174, 255, 99, 0.5)",
+      //     backgroundColor: "rgba(174, 255, 99, 0.8)",
       //   },
 
       //   {
       //     label: "Usage PR9",
       //     data: usagePR9,
       //     borderColor: "rgb(174, 255, 99)",
-      //     backgroundColor: "rgba(174, 255, 99, 0.5)",
+      //     backgroundColor: "rgba(174, 255, 99, 0.8)",
       //   },
 
       //   {
       //     label: "Usage SO14",
       //     data: usageSO14,
       //     borderColor: "rgb(174, 255, 99)",
-      //     backgroundColor: "rgba(174, 255, 99, 0.5)",
+      //     backgroundColor: "rgba(174, 255, 99, 0.8)",
       //   },
 
       //   {
       //     label: "Usage WA10",
       //     data: usageWA10,
       //     borderColor: "rgb(174, 255, 99)",
-      //     backgroundColor: "rgba(174, 255, 99, 0.5)",
+      //     backgroundColor: "rgba(174, 255, 99, 0.8)",
       //   },
 
       //   {
       //     label: "Usage WA7",
       //     data: usageWA7,
       //     borderColor: "rgb(174, 255, 99)",
-      //     backgroundColor: "rgba(174, 255, 99, 0.5)",
+      //     backgroundColor: "rgba(174, 255, 99, 0.8)",
       //   },
 
       //   {
       //     label: "Usage WA8",
       //     data: usageWA8,
       //     borderColor: "rgb(174, 255, 99)",
-      //     backgroundColor: "rgba(174, 255, 99, 0.5)",
+      //     backgroundColor: "rgba(174, 255, 99, 0.8)",
       //   },
 
       //   {
       //     label: "Usage WA9",
       //     data: usageWA9,
       //     borderColor: "rgb(174, 255, 99)",
-      //     backgroundColor: "rgba(174, 255, 99, 0.5)",
+      //     backgroundColor: "rgba(174, 255, 99, 0.8)",
       //   },
     ],
   };
