@@ -29,7 +29,7 @@ const palette = [
 
 const getColor = (magicNumber: number) => {
   const matchingRange = scales.find(
-    (rangeObject) => rangeObject.value >= magicNumber
+    (rangeObject) => rangeObject.value >= magicNumber,
   );
   if (!matchingRange) {
     // TODO: do something better here
@@ -47,7 +47,7 @@ const prepareCircle = (roughItem: {
   end_date: unknown;
   latitude: number;
   longitude: number;
-  postcode: string;
+  postcode_sector: string;
   Count_sum: string;
 }) => {
   uniqueStartDatesSet.add(roughItem.start_date);
@@ -55,12 +55,15 @@ const prepareCircle = (roughItem: {
 
   return {
     position: [roughItem.latitude, roughItem.longitude],
-    postcode: roughItem.postcode,
+    postcode_sector: roughItem.postcode_sector,
     startDate: roughItem.start_date,
     color: getColor(Number(roughItem.Count_sum)),
     sum: Number(roughItem.Count_sum),
     result:
-      "Postcode: " + roughItem.postcode + " - Loans: " + roughItem.Count_sum,
+      "Postcode: " +
+      roughItem.postcode_sector +
+      " - Loans: " +
+      roughItem.Count_sum,
   };
 };
 
@@ -122,32 +125,32 @@ const setScale = (maxAmount: number) => {
   return scales;
 };
 
-const MapPage = ({ data }) => {
+const MapSectorPage = ({ data }) => {
   // TODO: give csv file a better name
 
-  const biggestSum = data.allMapCsv.edges.reduce(
+  const biggestSum = data.allMapsectorCsv.edges.reduce(
     (accumulator: number, currentItem: { node: { Count_sum: number } }) =>
       Number(currentItem.node.Count_sum) > accumulator
         ? Number(currentItem.node.Count_sum)
         : accumulator,
-    0
+    0,
   );
 
   scales = setScale(biggestSum);
   // TODO: give csv file a better name
-  const circles = data.allMapCsv.edges.map(
+  const circles = data.allMapsectorCsv.edges.map(
     (item: {
       node: {
         start_date: unknown;
         end_date: unknown;
         latitude: number;
         longitude: number;
-        postcode: string;
+        postcode_sector: string;
         Count_sum: string;
       };
     }) => {
       return prepareCircle(item.node);
-    }
+    },
   );
 
   const uniqueStartDates = Array.from(uniqueStartDatesSet);
@@ -181,14 +184,15 @@ const MapPage = ({ data }) => {
         {circles
           .filter(
             (circle: { startDate: unknown }) =>
-              circle.startDate === uniqueStartDates[sliderPosition]
+              circle.startDate === uniqueStartDates[sliderPosition],
           )
           .map(
             (circle: {
-              postcode: string;
+              postcode_sector: string;
               startDate: string;
               position: unknown;
               color: string;
+              sum: number;
               result:
                 | string
                 | number
@@ -203,16 +207,16 @@ const MapPage = ({ data }) => {
                 | undefined;
             }) => (
               <Circle
-                key={circle.postcode + circle.startDate}
+                key={circle.postcode_sector + circle.startDate}
                 center={circle.position}
-                radius="100"
+                radius={circle.sum * 20 + ""}
                 opacity="0.8"
                 fillOpacity="0.5"
                 color={circle.color}
               >
                 <Popup>{circle.result}</Popup>
               </Circle>
-            )
+            ),
           )}
       </MapContainer>
 
@@ -245,13 +249,13 @@ const MapPage = ({ data }) => {
 
 export const query = graphql`
   query MyQuery {
-    allMapCsv {
+    allMapsectorCsv {
       edges {
         node {
           Count_sum
           latitude
           longitude
-          postcode
+          postcode_sector
           start_date
           end_date
         }
@@ -259,6 +263,6 @@ export const query = graphql`
     }
   }
 `;
-export default MapPage;
+export default MapSectorPage;
 // TODO: change header for all pages?
 export const Head = () => <title>Superb Map Tool</title>;
