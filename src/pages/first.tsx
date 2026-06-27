@@ -1,5 +1,5 @@
 import React from "react";
-import { graphql } from "gatsby";
+import { graphql, Link } from "gatsby";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -18,7 +18,6 @@ import {
 } from "chart.js";
 import { Line } from "react-chartjs-2";
 import { _DeepPartialObject } from "chart.js/dist/types/utils";
-import { text } from "stream/consumers";
 
 ChartJS.register(
   CategoryScale,
@@ -27,13 +26,13 @@ ChartJS.register(
   LineElement,
   Title,
   Tooltip,
-  Legend
+  Legend,
 );
 
 const FirstsPage = ({ data }) => {
-  let labels: string[] = [];
-  let firsts: string[] = [];
-  let allUsers: string[] = [];
+  const labels: string[] = [];
+  const firsts: string[] = [];
+  const allUsers: string[] = [];
 
   data.allFirstCsv.edges.forEach(
     (item: {
@@ -47,7 +46,7 @@ const FirstsPage = ({ data }) => {
       allUsers.push(item.node.all_users);
       firsts.push(item.node.New_Users);
       labels.push(item.node.Start_Date + " to " + item.node.End_Date);
-    }
+    },
   );
 
   const options: _DeepPartialObject<
@@ -57,6 +56,11 @@ const FirstsPage = ({ data }) => {
       DatasetChartOptions<"line">
   > = {
     responsive: true,
+    // elements: {
+    //   line: {
+    //     tension: 0.4,
+    //   },
+    // },
     plugins: {
       legend: {
         position: "top",
@@ -75,18 +79,23 @@ const FirstsPage = ({ data }) => {
         label: "First Time Users",
         data: firsts,
         borderColor: "rgb(255, 99, 132)",
-        backgroundColor: "rgba(255, 99, 132, 0.5)",
+        backgroundColor: "rgba(255, 99, 132, 0.8)",
       },
       {
         label: "All Users",
         data: allUsers,
         borderColor: "rgb(255, 161, 99)",
-        backgroundColor: "rgba(255, 161, 99, 0.5)",
+        backgroundColor: "rgba(255, 161, 99, 0.8)",
       },
     ],
   };
 
-  return <Line options={options} data={chartData} />;
+  return (
+    <>
+      <Link to="/">Home</Link>
+      <Line options={options} data={chartData} />;
+    </>
+  );
 };
 
 export const query = graphql`

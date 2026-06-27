@@ -5,7 +5,6 @@ import "./map.css";
 
 // TODO: try using  "leaflet-control-geocoder": "3.3.1",
 
-
 const centreCoordinates = [
   Number(process.env.GATSBY_LIBRARY_LATITUDE),
   Number(process.env.GATSBY_LIBRARY_LONGITUDE),
@@ -32,7 +31,7 @@ const palette = [
 
 const getColor = (magicNumber: number) => {
   const matchingRange = scales.find(
-    (rangeObject) => rangeObject.value >= magicNumber
+    (rangeObject) => rangeObject.value >= magicNumber,
   );
   if (!matchingRange) {
     // TODO: do something better here
@@ -133,7 +132,7 @@ const MapPage = ({ data }) => {
       Number(currentItem.node.Count_sum) > accumulator
         ? Number(currentItem.node.Count_sum)
         : accumulator,
-    0
+    0,
   );
 
   scales = setScale(biggestSum);
@@ -150,7 +149,7 @@ const MapPage = ({ data }) => {
       };
     }) => {
       return prepareCircle(item.node);
-    }
+    },
   );
 
   const uniqueStartDates = Array.from(uniqueStartDatesSet);
@@ -184,7 +183,7 @@ const MapPage = ({ data }) => {
         {circles
           .filter(
             (circle: { startDate: unknown }) =>
-              circle.startDate === uniqueStartDates[sliderPosition]
+              circle.startDate === uniqueStartDates[sliderPosition],
           )
           .map(
             (circle: {
@@ -215,7 +214,7 @@ const MapPage = ({ data }) => {
               >
                 <Popup>{circle.result}</Popup>
               </Circle>
-            )
+            ),
           )}
       </MapContainer>
 

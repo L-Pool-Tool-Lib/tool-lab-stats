@@ -29,7 +29,7 @@ const palette = [
 
 const getColor = (magicNumber: number) => {
   const matchingRange = scales.find(
-    (rangeObject) => rangeObject.value >= magicNumber
+    (rangeObject) => rangeObject.value >= magicNumber,
   );
   if (!matchingRange) {
     // TODO: do something better here
@@ -133,7 +133,7 @@ const MapDistrictPage = ({ data }) => {
       Number(currentItem.node.Count_sum) > accumulator
         ? Number(currentItem.node.Count_sum)
         : accumulator,
-    0
+    0,
   );
 
   scales = setScale(biggestSum);
@@ -150,7 +150,7 @@ const MapDistrictPage = ({ data }) => {
       };
     }) => {
       return prepareCircle(item.node);
-    }
+    },
   );
 
   const uniqueStartDates = Array.from(uniqueStartDatesSet);
@@ -184,7 +184,7 @@ const MapDistrictPage = ({ data }) => {
         {circles
           .filter(
             (circle: { startDate: unknown }) =>
-              circle.startDate === uniqueStartDates[sliderPosition]
+              circle.startDate === uniqueStartDates[sliderPosition],
           )
           .map(
             (circle: {
@@ -216,7 +216,7 @@ const MapDistrictPage = ({ data }) => {
               >
                 <Popup>{circle.result}</Popup>
               </Circle>
-            )
+            ),
           )}
       </MapContainer>
 

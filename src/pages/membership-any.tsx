@@ -178,7 +178,7 @@ const MembershipPage = ({ data }) => {
       </p>
     </>
   );
-};;
+};
 
 export const query = graphql`
   query MyQuery {

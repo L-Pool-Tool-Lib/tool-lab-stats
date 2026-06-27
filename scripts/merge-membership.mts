@@ -93,6 +93,7 @@ async function main() {
 
   for (let i = 0; i < typeNames.length; i++) {
     try {
+      // TODO: do we mean to do that twice?
       await mergeDir(typeNames[i]);
       await mergeDir(typeNames[i]);
       console.log("Merged CSV files");
