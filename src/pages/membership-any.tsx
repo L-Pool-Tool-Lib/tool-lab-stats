@@ -105,50 +105,52 @@ const MembershipPage = ({ data }) => {
     },
   };
 
+  // TODO: define total as zero for the lines
+
   const chartData = {
     labels,
     datasets: [
       {
-        label: "Active",
+        label: "Total",
         data: active,
         borderColor: "rgb(255, 99, 132)",
-        backgroundColor: "rgba(255, 99, 132, 0.5)",
+        backgroundColor: "rgba(255, 99, 132, 0.8)",
       },
       {
         label: "Cancelled",
         data: cancelled,
         borderColor: "rgb(174, 255, 99)",
-        backgroundColor: "rgba(174, 255, 99, 0.5)",
+        backgroundColor: "rgba(174, 255, 99, 0.8)",
       },
       // {
       //   label: "Changed",
       //   data: changed,
       //   borderColor: "rgb(99, 255, 213)",
-      //   backgroundColor: "rgba(99, 255, 213, 0.5)",
+      //   backgroundColor: "rgba(99, 255, 213, 0.8)",
       // },
       {
         label: "Downgraded",
         data: downgraded,
         borderColor: "rgb(255, 161, 99)",
-        backgroundColor: "rgba(255, 161, 99, 0.5)",
+        backgroundColor: "rgba(255, 161, 99, 0.8)",
       },
       {
         label: "Expired",
         data: expired,
         borderColor: "rgb(255, 232, 99)",
-        backgroundColor: "rgba(255, 232, 99, 0.5)",
+        backgroundColor: "rgba(255, 232, 99, 0.8)",
       },
       {
         label: "New",
         data: newMembership,
         borderColor: "rgb(99, 156, 255)",
-        backgroundColor: "rgba(99, 130, 255, 0.5)",
+        backgroundColor: "rgba(99, 130, 255, 0.8)",
       },
       {
         label: "Renewed",
         data: renewed,
         borderColor: "rgb(172, 99, 255)",
-        backgroundColor: "rgba(172, 99, 255, 0.5)",
+        backgroundColor: "rgba(172, 99, 255, 0.8)",
       },
     ],
   };
@@ -176,7 +178,7 @@ const MembershipPage = ({ data }) => {
       </p>
     </>
   );
-};
+};;
 
 export const query = graphql`
   query MyQuery {

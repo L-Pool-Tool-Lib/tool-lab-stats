@@ -3,9 +3,6 @@ import { MapContainer, TileLayer, Marker, Popup, Circle } from "react-leaflet";
 import { graphql, Link } from "gatsby";
 import "./map.css";
 
-// TODO: try using  "leaflet-control-geocoder": "3.3.1",
-
-
 const centreCoordinates = [
   Number(process.env.GATSBY_LIBRARY_LATITUDE),
   Number(process.env.GATSBY_LIBRARY_LONGITUDE),
@@ -50,7 +47,7 @@ const prepareCircle = (roughItem: {
   end_date: unknown;
   latitude: number;
   longitude: number;
-  postcode: string;
+  postcode_district: string;
   Count_sum: string;
 }) => {
   uniqueStartDatesSet.add(roughItem.start_date);
@@ -58,12 +55,15 @@ const prepareCircle = (roughItem: {
 
   return {
     position: [roughItem.latitude, roughItem.longitude],
-    postcode: roughItem.postcode,
+    postcode_district: roughItem.postcode_district,
     startDate: roughItem.start_date,
     color: getColor(Number(roughItem.Count_sum)),
     sum: Number(roughItem.Count_sum),
     result:
-      "Postcode: " + roughItem.postcode + " - Loans: " + roughItem.Count_sum,
+      "Postcode: " +
+      roughItem.postcode_district +
+      " - Loans: " +
+      roughItem.Count_sum,
   };
 };
 
@@ -125,10 +125,10 @@ const setScale = (maxAmount: number) => {
   return scales;
 };
 
-const MapPage = ({ data }) => {
+const MapDistrictPage = ({ data }) => {
   // TODO: give csv file a better name
 
-  const biggestSum = data.allMapCsv.edges.reduce(
+  const biggestSum = data.allMapdistrictCsv.edges.reduce(
     (accumulator: number, currentItem: { node: { Count_sum: number } }) =>
       Number(currentItem.node.Count_sum) > accumulator
         ? Number(currentItem.node.Count_sum)
@@ -138,14 +138,14 @@ const MapPage = ({ data }) => {
 
   scales = setScale(biggestSum);
   // TODO: give csv file a better name
-  const circles = data.allMapCsv.edges.map(
+  const circles = data.allMapdistrictCsv.edges.map(
     (item: {
       node: {
         start_date: unknown;
         end_date: unknown;
         latitude: number;
         longitude: number;
-        postcode: string;
+        postcode_district: string;
         Count_sum: string;
       };
     }) => {
@@ -188,10 +188,11 @@ const MapPage = ({ data }) => {
           )
           .map(
             (circle: {
-              postcode: string;
+              postcode_district: string;
               startDate: string;
               position: unknown;
               color: string;
+              sum: number;
               result:
                 | string
                 | number
@@ -206,9 +207,9 @@ const MapPage = ({ data }) => {
                 | undefined;
             }) => (
               <Circle
-                key={circle.postcode + circle.startDate}
+                key={circle.postcode_district + circle.startDate}
                 center={circle.position}
-                radius="100"
+                radius={circle.sum * 15 + ""}
                 opacity="0.8"
                 fillOpacity="0.5"
                 color={circle.color}
@@ -248,13 +249,13 @@ const MapPage = ({ data }) => {
 
 export const query = graphql`
   query MyQuery {
-    allMapCsv {
+    allMapdistrictCsv {
       edges {
         node {
           Count_sum
           latitude
           longitude
-          postcode
+          postcode_district
           start_date
           end_date
         }
@@ -262,6 +263,6 @@ export const query = graphql`
     }
   }
 `;
-export default MapPage;
+export default MapDistrictPage;
 // TODO: change header for all pages?
 export const Head = () => <title>Superb Map Tool</title>;

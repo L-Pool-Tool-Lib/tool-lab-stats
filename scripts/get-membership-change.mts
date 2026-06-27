@@ -45,7 +45,35 @@ function getNextStep(endDate: Date): number {
   return Math.min(daysToThursday, daysToSunday);
 }
 
-async function getDataForAggregate(aggregate: string) {
+function getTypeNameFromId(id: string): string {
+  // type
+  // any = 0
+  // pay it forward = 7965
+  // standard = 5426
+  // concession = 7964
+  // aspen yard = 8914
+  // employee = 9961
+  // volunteer = 5682
+
+  const typeById: Record<string, string> = getTypeNameById();
+  return typeById[id];
+}
+
+function getTypeNameById(): Record<string, string> {
+  return {
+    "0": "any",
+    "7965": "payItForward",
+    // pay it forward = 7965
+    // standard = 5426
+    "5426": "standard",
+    "7964": "concession",
+    "8914": "aspenYard",
+    "9961": "employee",
+    "5682": "volunteer",
+  };
+}
+
+async function getMembershipChangeDataForTypeId(typeId: string) {
   dotenv.config({
     path: ".env.development",
   });
@@ -76,11 +104,13 @@ async function getDataForAggregate(aggregate: string) {
 
   const COOKIE = await getCookies();
 
+  const typeName = getTypeNameFromId(typeId);
+
   let startDate = parseDateStrict(GATSBY_RANGE_START_DATE);
   let endDate = addDays(startDate, getNextStep(startDate));
   const rangeEndDate = parseDateStrict(GATSBY_RANGE_END_DATE);
 
-  const outDirBase = join(process.cwd(), "data", aggregate);
+  const outDirBase = join(process.cwd(), "data", "membershipChange", typeName);
   mkdirSync(outDirBase, { recursive: true });
 
   const gettingData = "Getting all the data.";
@@ -95,11 +125,11 @@ async function getDataForAggregate(aggregate: string) {
   ) {
     const formattedStart = formatDMY(startDate);
     const formattedEnd = formatDMY(endDate);
-    console.log(`Getting ${aggregate} - ${formattedStart}...`);
+    console.log(`Getting ${typeName} - ${formattedStart}...`);
 
     // TODO: cache the amount of days in both steps and alternate
 
-    const url = `https://${MT_API_URL}/library/orgLoan/exportAggregateLoanReport`;
+    const url = `https://${MT_API_URL}/library/orgMembership/exportMembershipChangeReport`;
 
     const headers: Record<string, string> = {
       Host: MT_API_URL,
@@ -120,6 +150,20 @@ async function getDataForAggregate(aggregate: string) {
     };
 
     const params = new URLSearchParams();
+
+    //  "from_date=26%2F02%2F2025
+    // from=struct
+    // from_tz=Europe%2FLondon
+    // from_time=00%3A00
+    // to_date=26%2F02%2F2026
+    // to=struct
+    // to_tz=Europe%2FLondon
+    // to_time=23%3A59%3A59.999
+    // transactionType=
+    // type=0
+    // format=csv
+    // extension=csv",
+
     params.set("from_date", formattedStart);
     params.set("from", "struct");
     params.set("from_tz", "Europe/London");
@@ -127,9 +171,11 @@ async function getDataForAggregate(aggregate: string) {
     params.set("to_date", formattedEnd);
     params.set("to", "struct");
     params.set("to_tz", "Europe/London");
-    params.set("to_time", "23:59");
-    params.set("aggregateAttribute", aggregate);
-    params.set("location.id", "2806");
+    params.set("to_time", "23:59.999");
+    // params.set("aggregateAttribute", aggregate);
+
+    params.set("transactionType", "");
+    params.set("type", typeId);
     params.set("format", "csv");
     params.set("extension", "csv");
 
@@ -159,7 +205,7 @@ async function getDataForAggregate(aggregate: string) {
       await sleep(sleepDurationMs);
       loops++;
     } else {
-      console.log(`Skipping ${aggregate} - ${formattedStart}`);
+      console.log(`Skipping ${typeName} - ${formattedStart}`);
     }
 
     startDate = addDays(endDate, 1);
@@ -173,43 +219,8 @@ async function getDataForAggregate(aggregate: string) {
   );
 }
 
-export async function getDataForGender() {
-  await getDataForAggregate("sex");
-}
+const typeNameById = getTypeNameById();
 
-export async function getDataForPostcode() {
-  await getDataForAggregate("zip");
-  await getMerseyPostcodeData();
+for (const id in typeNameById) {
+  await getMembershipChangeDataForTypeId(id);
 }
-
-// (user, zip, sex, yearOfBirth, membership)
-export async function getDataForUsers() {
-  await getDataForAggregate("user");
-}
-// (user, zip, sex, yearOfBirth, membership)
-export async function getDataForYearOfBirth() {
-  await getDataForAggregate("yearOfBirth");
-}
-// (user, zip, sex, yearOfBirth, membership)
-export async function getDataForMembership() {
-  await getDataForAggregate("membership");
-}
-
-// curl https://www.getthedata.com/downloads/open_postcode_geo_merseyside.csv >> postcodes.csv
-async function getMerseyPostcodeData() {
-  const url =
-    "https://www.getthedata.com/downloads/open_postcode_geo_merseyside.csv";
-  const resp = await fetch(url);
-  if (!resp.ok) {
-    console.error(`Failed to fetch: ${resp.status} ${resp.statusText}`);
-    return;
-  }
-  const data = await resp.text();
-  writeFileSync("postcodes.csv", data);
-}
-
-await getDataForGender();
-await getDataForPostcode();
-await getDataForUsers();
-await getDataForYearOfBirth();
-await getDataForMembership();

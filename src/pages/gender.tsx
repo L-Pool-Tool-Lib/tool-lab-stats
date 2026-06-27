@@ -25,7 +25,7 @@ ChartJS.register(
   LineElement,
   Title,
   Tooltip,
-  Legend
+  Legend,
 );
 
 const GenderPage = ({ data }) => {
@@ -54,7 +54,7 @@ const GenderPage = ({ data }) => {
       usageRather.push(item.node.none_sum);
       usageNone.push(item.node.unspecified_sum);
       labels.push(item.node.StartDate_first + " to " + item.node.EndDate_first);
-    }
+    },
   );
 
   const options: _DeepPartialObject<
@@ -64,6 +64,11 @@ const GenderPage = ({ data }) => {
       DatasetChartOptions<"line">
   > = {
     responsive: true,
+    // elements: {
+    //   line: {
+    //     tension: 0.4,
+    //   },
+    // },
     plugins: {
       legend: {
         position: "top",
@@ -82,31 +87,31 @@ const GenderPage = ({ data }) => {
         label: "Total",
         data: usage,
         borderColor: "rgb(255, 99, 132)",
-        backgroundColor: "rgba(255, 99, 132, 0.5)",
+        backgroundColor: "rgba(255, 99, 132, 0.8)",
       },
       {
         label: "Usage Male",
         data: usageMale,
         borderColor: "rgb(174, 255, 99)",
-        backgroundColor: "rgba(174, 255, 99, 0.5)",
+        backgroundColor: "rgba(174, 255, 99, 0.8)",
       },
       {
         label: "Usage Female",
         data: usageFemale,
         borderColor: "rgb(99, 255, 213)",
-        backgroundColor: "rgba(99, 255, 213, 0.5)",
+        backgroundColor: "rgba(99, 255, 213, 0.8)",
       },
       {
         label: "Usage Not said",
         data: usageRather,
         borderColor: "rgb(255, 161, 99)",
-        backgroundColor: "rgba(255, 161, 99, 0.5)",
+        backgroundColor: "rgba(255, 161, 99, 0.8)",
       },
       {
         label: "Usage None",
         data: usageNone,
         borderColor: "rgb(255, 232, 99)",
-        backgroundColor: "rgba(255, 232, 99, 0.5)",
+        backgroundColor: "rgba(255, 232, 99, 0.8)",
       },
     ],
   };

@@ -47,9 +47,8 @@ async function main() {
   try {
     await mergeDir("sex");
     await mergeDir("zip");
-    console.log(
-      "Merged CSV files into data/sex/collection.csv and data/zip/collection.csv"
-    );
+    await mergeDir("user");
+    console.log("Merged CSV files");
   } catch (err) {
     console.error(err);
     process.exit(1);
