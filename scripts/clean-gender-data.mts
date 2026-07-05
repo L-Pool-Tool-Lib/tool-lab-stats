@@ -43,6 +43,7 @@ async function main() {
     ])
     .drop(["Filename", "Filename_clean"]);
 
+  // TODO: format here
   // 3) Reformat Start/End dates from YYYY-MM-DD to DD/MM/YYYY if needed
   const df3 = df2.withColumns([
     pl
