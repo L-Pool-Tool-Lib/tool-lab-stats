@@ -6,6 +6,12 @@ import path from "path";
 //    yarn add polars
 import pl from "nodejs-polars";
 
+type DataType = {
+  sourceDirName: string;
+  sourceFileName: string;
+  targetFileName: string;
+};
+
 async function main() {
   const input = path.join(process.cwd(), "data", "sex", "collection.csv");
   const output = path.join(process.cwd(), "src", "data", "gender.csv");
@@ -43,6 +49,7 @@ async function main() {
     ])
     .drop(["Filename", "Filename_clean"]);
 
+  // TODO: format here
   // 3) Reformat Start/End dates from YYYY-MM-DD to DD/MM/YYYY if needed
   const df3 = df2.withColumns([
     pl
@@ -164,6 +171,12 @@ async function main() {
 
   console.log(`Wrote cleaned gender CSV to ${output}`);
 }
+
+// await getDataForGender();
+// await getDataForPostcode();
+// await getDataForUsers();
+// await getDataForYearOfBirth();
+// await getDataForMembership();
 
 if (require.main === module) {
   main().catch((err) => {
