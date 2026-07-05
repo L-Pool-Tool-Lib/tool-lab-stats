@@ -45,6 +45,11 @@ async function mergeDir(dirName: string) {
 
 async function main() {
   try {
+    // sex
+    // zip
+    // user
+    // yearOfBirth
+    // membership
     // TODO: iterate over a list of strings instead
     await mergeDir("sex");
     await mergeDir("zip");
