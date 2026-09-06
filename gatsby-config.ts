@@ -8,13 +8,13 @@ dotenv.config({
 const config: GatsbyConfig = {
   siteMetadata: {
     title: `Tool Lab Stats`,
-    siteUrl: `https://www.yourdomain.tld`,
+    siteUrl: `http://localhost:9000`,
   },
   // More easily incorporate content into your pages through automatic TypeScript type generation and better GraphQL IntelliSense.
   // If you use VSCode you can also use the GraphQL plugin
   // Learn more at: https://gatsby.dev/graphql-typegen
   graphqlTypegen: true,
-  pathPrefix: "/map-turner",
+  // pathPrefix: "/map-turner",
   plugins: [
     {
       resolve: "gatsby-plugin-react-leaflet",
