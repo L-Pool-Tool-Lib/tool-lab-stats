@@ -155,7 +155,7 @@ async function getDataForAggregate(aggregate: string) {
         process.exit(1);
       }
       const buffer = Buffer.from(await resp.arrayBuffer());
-      writeFileSync(outPath, buffer);
+      writeFileSync(outPath, buffer.toString());
       await sleep(sleepDurationMs);
       loops++;
     } else {
