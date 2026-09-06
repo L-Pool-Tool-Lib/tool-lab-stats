@@ -47,3 +47,31 @@
 Deploy this starter with one click on [Netlify](https://app.netlify.com/signup):
 
 [<img src="https://www.netlify.com/img/deploy/button.svg" alt="Deploy to Netlify" />](https://app.netlify.com/start/deploy?repository=https://github.com/gatsbyjs/gatsby-starter-minimal-ts)
+
+# Process
+
+## Download files
+
+- add dates to filename
+- place in folders matching aggregate category
+
+## merge files
+
+- add file name as date columns
+- aggregate categories and make them columns (membership, sex)
+- turn postcodes into geo location (zip)
+
+### TODO: mystery categories:
+
+- data\membershipChange ????
+- data\membershipType ????
+- data\user ????
+- data\yearOfBirth
+
+# TODO write a script detailing all the commands to run to:
+
+# - get the data
+
+# - refresh the data
+
+# TODO: ask chatgpt to write the script to merge + make the columns
